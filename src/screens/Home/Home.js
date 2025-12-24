@@ -1,8 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, StatusBar, TouchableOpacity, TextInput, Dimensions, Platform, Alert, Image, ImageBackground } from 'react-native';
+import { 
+    View, 
+  Text, 
+  StyleSheet, 
+  ScrollView, 
+  StatusBar, 
+  TouchableOpacity, 
+  TextInput, 
+  Dimensions, 
+  Platform, 
+  Image, 
+  ImageBackground 
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient'; 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 
@@ -14,32 +27,81 @@ const RECENT_NEWS = [
     category: 'Panchayat',
     date: '2 hours ago',
     image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80',
-    description: 'The village council has approved the construction of a new canal to support farmers in the northern sector. This project aims to improve water availability during the dry season.'
-  },
+    description: 'The village council has approved the construction of a new canal to support farmers in the northern sector.'
+},
   {
     id: '2',
     title: 'Monsoon Crop Sowing Guidelines',
     category: 'Agriculture',
     date: '5 hours ago',
     image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80',
-    description: 'Experts suggest specific sowing techniques for this monsoon season to maximize yield. Farmers are advised to use the new seed varieties provided by the agricultural center.'
-  },
+    description: 'Experts suggest specific sowing techniques for this monsoon season to maximize yield.'
+},
   {
     id: '3',
     title: 'Free Vaccination Camp this Sunday',
     category: 'Health',
     date: '1 day ago',
     image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
-    description: 'A team of doctors will visit the community hall for free checkups and vaccinations. All villagers are encouraged to bring their children for polio drops.'
-  }
+    description: 'A team of doctors will visit the community hall for free checkups and vaccinations.'    
+ }
+];
+
+// Synced Market Data (Same as MarketPlaceList.js)
+const MARKET_ITEMS = [
+  {
+    id: '1',
+    title: 'John Deere 5310 Tractor',
+    price: '₹5,50,000',
+    category: 'Vehicles',
+    location: 'Rampur Village',
+    image: 'https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop',
+    seller: 'Ramesh Kumar',
+    description: '2021 Model, 55HP. Excellent condition, new tires installed last month.',
+    contact: '9876543210'
+  },
+  {
+    id: '2',
+    title: 'Organic Wheat Seeds (50kg)',
+    price: '₹2,200',
+    category: 'Seeds',
+    location: 'Dholakpur',
+    image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?q=80&w=800&auto=format&fit=crop',
+    seller: 'Kisan Kendra',
+    description: 'High yield organic wheat seeds. Certified by state agriculture board.',
+    contact: '9876543210'
+  },
+  {
+    id: '3',
+    title: 'Solar Water Pump',
+    price: '₹25,000',
+    category: 'Equipment',
+    location: 'Sonpur',
+    image: 'https://plus.unsplash.com/premium_photo-1661876569143-6c84c1f93021?q=80&w=800&auto=format&fit=crop',
+    seller: 'Green Energy Sol',
+    description: '3HP Solar submersible pump. 5 year warranty included.',
+    contact: '9876543210'
+  },
+  {
+    id: '4',
+    title: 'Jersey Cow (Milking)',
+    price: '₹45,000',
+    category: 'Livestock',
+    location: 'Bopal',
+    image: 'https://images.unsplash.com/photo-1546445317-29f4545e9d53?q=80&w=800&auto=format&fit=crop',
+    seller: 'Suresh Yadav',
+    description: 'Healthy Jersey cow, 15L milk capacity per day. 2nd lactation.',
+    contact: '9876543210'
+}
 ];
 
 export default function Home() {
   const navigation = useNavigation();
 
+  const insets = useSafeAreaInsets();
 
   const handleProfile = () => {
-    Alert.alert("Profile", "Profile section coming soon!");
+    navigation.navigate('Profile')
   };
 
   const handleServicePress = (serviceName) => {
@@ -57,13 +119,18 @@ export default function Home() {
       case 'Agriculture': return '#2E7D32';
       case 'Health': return '#C62828';
       case 'Panchayat': return '#134E5E';
+   // Market Categories
+      case 'Vehicles': return '#134E5E';
+      case 'Seeds': return '#2E7D32';
+      case 'Equipment': return '#F59E0B';
+      case 'Livestock': return '#C62828';
       default: return '#64748B';
     }
   };
 
  return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
 
       {/* 1. Header */}
       <View style={styles.header}>
@@ -74,14 +141,17 @@ export default function Home() {
           >
             <Text style={styles.logoText}>V</Text>
           </LinearGradient>
-          <Text style={styles.appName}>Village Digital</Text>
+          <View>
+             <Text style={styles.welcomeText}>Welcome back,</Text>
+             <Text style={styles.appName}>Village Digital</Text>
+          </View>
         </View>
         <View style={styles.headerRight}>
           <TouchableOpacity style={styles.iconButton}>
              <Feather name="bell" size={24} color="#134E5E" />
              <View style={styles.badge} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleProfile} style={[styles.iconButton, {marginLeft: 8}]}>
+          <TouchableOpacity onPress={handleProfile} style={[styles.iconButton, {marginLeft: 12}]}>
             <Feather name="user" size={24} color="#134E5E" />
           </TouchableOpacity>
         </View>
@@ -98,19 +168,12 @@ export default function Home() {
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
+            <Feather name="search" size={20} color="#94A3B8" style={styles.searchIcon} />
             <TextInput 
               style={styles.searchInput}
               placeholder="Search services, products..."
               placeholderTextColor="#94A3B8"
             />
-            <TouchableOpacity activeOpacity={0.8}>
-              <LinearGradient
-                colors={['#134E5E', '#71B280']}
-                style={styles.searchButton}
-              >
-                <Feather name="search" size={20} color="#FFF" />
-              </LinearGradient>
-            </TouchableOpacity>
           </View>
 
           {/* Stats Row */}
@@ -170,45 +233,6 @@ export default function Home() {
               style={styles.newsCard}
               activeOpacity={0.9}
               onPress={() => navigation.navigate('NewsDetails', { article: item })}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             >
               <ImageBackground 
                 source={{ uri: item.image }} 
@@ -239,23 +263,35 @@ export default function Home() {
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
-          {[
-            { name: 'Organic Mangoes', price: '₹150/kg', image: 'https://images.unsplash.com/photo-1553279768-865429fa0078?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
-            { name: 'Clay Pottery', price: '₹250', image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
-            { name: 'Pure Honey', price: '₹400', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
-            { name: 'Handwoven Shawls', price: '₹800', image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
-          ].map((item, index) => (
-            <View key={index} style={styles.productCard}>
-              <Image 
-                source={{ uri: item.image }} 
-                style={styles.productImage} 
-                resizeMode="cover"
-              />
+        {MARKET_ITEMS.map((item) => (
+            <TouchableOpacity 
+              key={item.id} 
+              style={styles.productCard}
+              activeOpacity={0.9}
+              onPress={() => navigation.navigate('MarketPlaceDetails', { item })}
+            >
+              <View style={styles.imageWrapper}>
+                <Image 
+                  source={{ uri: item.image }} 
+                  style={styles.productImage} 
+                  resizeMode="cover"
+                />
+                <View style={[styles.marketBadge, { backgroundColor: getCategoryColor(item.category) }]}>
+                  <Text style={styles.marketBadgeText}>{item.category}</Text>
+                </View>
+              </View>
+              
+
               <View style={styles.productInfo}>
                 <Text style={styles.productTitle} numberOfLines={1}>{item.name}</Text>
-                <Text style={styles.productPrice}>{item.price}</Text>
-              </View>
-            </View>
+                <Text style={styles.productTitle} numberOfLines={1}>{item.title}</Text>
+                
+                <View style={styles.locationRow}>
+                  <Feather name="map-pin" size={10} color="#94A3B8" />
+                  <Text style={styles.locationText}>{item.location}</Text>
+                </View>
+                </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
 
@@ -300,35 +336,22 @@ export default function Home() {
         {/* Bottom Padding for Tab Bar */}
         <View style={{height: 120}} />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
-
+    backgroundColor: '#F8FAFC', 
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    // Dynamic top padding for seamless Android look
-    paddingTop: Platform.OS === 'android' ? 45 : 15,
-    backgroundColor: '#FFFFFF',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    // Modern soft shadow
-    shadowColor: '#134E5E',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    elevation: 4,
-    zIndex: 10,
-    marginBottom: 5,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    backgroundColor: '#F8FAFC',
   },
   headerLeft: {
     flexDirection: 'row',
@@ -339,17 +362,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoBox: {
-    width: 38,
-    height: 38,
+    width: 40,
+    height: 40,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 10,
+    marginRight: 12,
   },
   logoText: {
     color: '#FFF',
     fontWeight: '800',
     fontSize: 20,
+  },
+  welcomeText: {
+    fontSize: 12,
+    color: '#64748B',
+    fontWeight: '600',
   },
   appName: {
     fontSize: 20,
@@ -358,87 +386,81 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   iconButton: {
-    padding: 6,
-    position: 'relative',
-    backgroundColor: '#F1F5F9',
-    borderRadius: 50,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
   },
   badge: {
     position: 'absolute',
-    top: 6,
-    right: 6,
+    top: 8,
+    right: 10,
     width: 8,
     height: 8,
     borderRadius: 4,
     backgroundColor: '#EF4444',
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: '#FFF',
   },
   scrollContent: {
     paddingBottom: 20,
   },
   heroSection: {
-    margin: 20,
-    padding: 20,
+    margin: 24,
+    marginTop: 8,
+    padding: 24,
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
-    // Modern card shadow
-
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    borderWidth: 1,
+    borderColor: '#F1F5F9',
+    shadowColor: '#64748B',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
-    shadowRadius: 15,
-    elevation: 3,
+    shadowRadius: 12,
+    elevation: 2,
   },
   heroTitle: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#0F172A',
+    color: '#1E293B',
     marginBottom: 8,
-    lineHeight: 30,
+    lineHeight: 32,
   },
   heroSubtitle: {
     fontSize: 14,
     color: '#64748B',
     marginBottom: 20,
-    lineHeight: 20,
+    lineHeight: 22,
   },
   searchContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
+    alignItems: 'center',
+    backgroundColor: '#F8FAFC',
+    borderRadius: 12,
+    paddingHorizontal: 16,
     height: 50,
-
-
-
-
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    marginBottom: 20,
+  },
+  searchIcon: {
+    marginRight: 10,
   },
   searchInput: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
-    borderTopLeftRadius: 12,
-    borderBottomLeftRadius: 12,
-    paddingHorizontal: 16,
-    height: '100%',
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
-    borderRightWidth: 0,
-    color: '#0F172A',
     fontSize: 15,
-  },
-  searchButton: {
-    width: 50,
+    color: '#1E293B',
     height: '100%',
-    borderTopRightRadius: 12,
-    borderBottomRightRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   statsRow: {
     flexDirection: 'row',
     backgroundColor: '#F1F5F9',
     borderRadius: 12,
-    paddingVertical: 15,
-    paddingHorizontal: 5,
+    paddingVertical: 16,
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
@@ -455,20 +477,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#64748B',
     fontWeight: '600',
-    marginTop: 2,
+    marginTop: 4,
   },
   statDivider: {
     width: 1,
-    height: 25,
+    height: 30,
     backgroundColor: '#CBD5E1',
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginTop: 10,
-    marginBottom: 15,
+    paddingHorizontal: 24,
+    marginBottom: 16,
+    marginTop: 8,
   },
   sectionTitle: {
     fontSize: 18,
@@ -483,51 +505,43 @@ const styles = StyleSheet.create({
   servicesGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     justifyContent: 'space-between',
   },
   serviceCard: {
-    width: (width - 60) / 3, // Precise calculation for 3 columns with spacing
+    width: (width - 48 - 32) / 3, 
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
   },
   serviceIcon: {
     width: 56,
     height: 56,
-    borderRadius: 18,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
-    // Subtle inner shadow effect via border
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.03)',
-
-
   },
   serviceTitle: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600',
-    color: '#334155',
+    color: '#475569',
     textAlign: 'center',
   },
   horizontalScroll: {
-    paddingHorizontal: 20,
-    paddingBottom: 10, // Avoid clipping shadow
+    paddingHorizontal: 24,
+    paddingBottom: 24,
   },
   newsCard: {
     width: 280,
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     marginRight: 16,
-    // Soft shadow
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#F1F5F9',
+    overflow: 'hidden',
   },
   newsImage: {
-    height: 140,
+    height: 150,
     width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -535,14 +549,14 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.1)', // Light overlay for contrast
+    backgroundColor: 'rgba(0,0,0,0.1)',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
   tag: {
     paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
   },
   tagText: {
     color: '#FFF',
@@ -558,7 +572,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1E293B',
     marginBottom: 8,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   newsMeta: {
     flexDirection: 'row',
@@ -567,39 +581,69 @@ const styles = StyleSheet.create({
   newsDate: {
     fontSize: 12,
     color: '#94A3B8',
-    marginLeft: 4,
+    marginLeft: 6,
     fontWeight: '500',
   },
+  
+  // Updated Product Card Styles to match MarketPlaceList
   productCard: {
-    width: 150,
-    marginRight: 15,
+    width: 180, // Slightly wider to accommodate real data
+    marginRight: 16,
     backgroundColor: '#FFF',
     borderRadius: 16,
-
     borderWidth: 1,
     borderColor: '#F1F5F9',
     overflow: 'hidden',
   },
+  imageWrapper: {
+    height: 120,
+    position: 'relative',
+  },
   productImage: {
     width: '100%',
-    height: 110,
+    height: '100%',
+  },
+  marketBadge: {
+    position: 'absolute',
+    top: 8,
+    left: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 4,
+  },
+  marketBadgeText: {
+    color: '#FFF',
+    fontSize: 9,
+    fontWeight: '700',
+    textTransform: 'uppercase',
   },
   productInfo: {
     padding: 12,
   },
+  productPrice: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#134E5E', // Primary Color for price
+    marginBottom: 4,
+  },
   productTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1E293B',
-    marginBottom: 4,
+    color: '#334155',
+    marginBottom: 8,
   },
-  productPrice: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#134E5E',
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
+  locationText: {
+    fontSize: 11,
+    color: '#94A3B8',
+    marginLeft: 4,
+  },
+
   eventsContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   eventRow: {
     flexDirection: 'row',
@@ -609,22 +653,17 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: '#F1F5F9',
-    // Subtle shadow
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.03,
-    shadowRadius: 5,
-    elevation: 2,
   },
   dateBox: {
-    backgroundColor: '#F0FDFA', // Minty background
+    backgroundColor: '#F0FDFA',
     borderRadius: 12,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     alignItems: 'center',
     marginRight: 14,
     borderWidth: 1,
     borderColor: '#CCFBF1',
+    minWidth: 50,
   },
   dateDay: {
     fontSize: 18,
@@ -653,13 +692,13 @@ const styles = StyleSheet.create({
   },
   joinBtn: {
     backgroundColor: '#134E5E',
-    paddingHorizontal: 18,
-    paddingVertical: 10,
-    borderRadius: 24,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
   },
   joinBtnText: {
     color: '#FFF',
     fontSize: 12,
     fontWeight: '700',
-  },
+  }
 });

@@ -10,6 +10,7 @@ import NewsList from "../screens/News/NewsList";
 import MarketplaceList from "../screens/Marketplace/Marketplacelist";
 import EventsList from "../screens/Events/EventsList";
 
+
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
