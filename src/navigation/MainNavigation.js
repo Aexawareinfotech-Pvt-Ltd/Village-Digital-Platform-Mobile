@@ -26,6 +26,9 @@ import GrievanceDetails from "../screens/Grievances/GrievancesDetails";
 import GrievanceCreate from "../screens/Grievances/GrievancesCreate";
 import EventsList from "../screens/Events/EventsList";
 import EventDetails from "../screens/Events/EventDetails";
+import JobList from "../screens/jobs/JobList";
+import JobDetails from "../screens/jobs/JobDetails";
+import JobApply from "../screens/jobs/JobApply";
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +61,9 @@ export default function MainNavigation() {
             <Stack.Screen name="GrievanceCreate" component={GrievanceCreate} />
             <Stack.Screen name="EventList" component={EventsList} />
             <Stack.Screen name="EventDetails" component={EventDetails} />
+            <Stack.Screen name="JobList" component={JobList} />
+            <Stack.Screen name="JobDetails" component={JobDetails} />
+            <Stack.Screen name="JobApply" component={JobApply} />
         </Stack.Navigator>
     );
 }
