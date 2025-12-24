@@ -1,29 +1,43 @@
 import React from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView,
-  StatusBar, 
-  TouchableOpacity,
-  TextInput,
-  Dimensions,
-  Platform,
-  Alert,
-  Image, // Import Image
-  ImageBackground // Import ImageBackground for text over images
-} from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, StatusBar, TouchableOpacity, TextInput, Dimensions, Platform, Alert, Image, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient'; 
 
 const { width } = Dimensions.get('window');
 
+// Synced Data from NewsList.js to ensure consistency
+const RECENT_NEWS = [
+  {
+    id: '1',
+    title: 'New Irrigation Canal Project Approved',
+    category: 'Panchayat',
+    date: '2 hours ago',
+    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80',
+    description: 'The village council has approved the construction of a new canal to support farmers in the northern sector. This project aims to improve water availability during the dry season.'
+  },
+  {
+    id: '2',
+    title: 'Monsoon Crop Sowing Guidelines',
+    category: 'Agriculture',
+    date: '5 hours ago',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80',
+    description: 'Experts suggest specific sowing techniques for this monsoon season to maximize yield. Farmers are advised to use the new seed varieties provided by the agricultural center.'
+  },
+  {
+    id: '3',
+    title: 'Free Vaccination Camp this Sunday',
+    category: 'Health',
+    date: '1 day ago',
+    image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
+    description: 'A team of doctors will visit the community hall for free checkups and vaccinations. All villagers are encouraged to bring their children for polio drops.'
+  }
+];
+
 export default function Home() {
   const navigation = useNavigation();
 
-  // Navigation Handlers
+
   const handleProfile = () => {
     Alert.alert("Profile", "Profile section coming soon!");
   };
@@ -32,15 +46,25 @@ export default function Home() {
     switch(serviceName) {
       case 'News': navigation.navigate('News'); break;
       case 'Market': navigation.navigate('Market'); break;
-      case 'Events': navigation.navigate('Event'); break; // Navigate to Event Tab
+      case 'Events': navigation.navigate('Event'); break; 
       default: console.log(`Clicked on ${serviceName}`);
     }
   };
 
-  return (
+  // Helper for tag colors (Consistent with NewsList)
+  const getCategoryColor = (cat) => {
+    switch(cat) {
+      case 'Agriculture': return '#2E7D32';
+      case 'Health': return '#C62828';
+      case 'Panchayat': return '#134E5E';
+      default: return '#64748B';
+    }
+  };
+
+ return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
-      
+
       {/* 1. Header */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
@@ -57,27 +81,27 @@ export default function Home() {
              <Feather name="bell" size={24} color="#134E5E" />
              <View style={styles.badge} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleProfile} style={[styles.iconButton, {marginLeft: 10}]}>
+          <TouchableOpacity onPress={handleProfile} style={[styles.iconButton, {marginLeft: 8}]}>
             <Feather name="user" size={24} color="#134E5E" />
           </TouchableOpacity>
         </View>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        
+
         {/* 2. Hero Section */}
         <View style={styles.heroSection}>
-          <Text style={styles.heroTitle}>Connect, Grow, and Thrive</Text>
+          <Text style={styles.heroTitle}>Connect, Grow, & Thrive</Text>
           <Text style={styles.heroSubtitle}>
             Your digital gateway to village services and community support.
           </Text>
-          
+
           {/* Search Bar */}
           <View style={styles.searchContainer}>
             <TextInput 
               style={styles.searchInput}
-              placeholder="Search for services, products..."
-              placeholderTextColor="#9CA3AF"
+              placeholder="Search services, products..."
+              placeholderTextColor="#94A3B8"
             />
             <TouchableOpacity activeOpacity={0.8}>
               <LinearGradient
@@ -107,7 +131,7 @@ export default function Home() {
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Quick Access</Text>
         </View>
-        
+
         <View style={styles.servicesGrid}>
           {[
             { name: 'News', icon: 'file-text', color: '#134E5E', bg: '#E0F2F1' },
@@ -121,63 +145,91 @@ export default function Home() {
               key={index} 
               style={styles.serviceCard}
               onPress={() => handleServicePress(service.name)}
+              activeOpacity={0.7}
             >
               <View style={[styles.serviceIcon, { backgroundColor: service.bg }]}>
-                <Feather name={service.icon} size={24} color={service.color} />
+                <Feather name={service.icon} size={22} color={service.color} />
               </View>
               <Text style={styles.serviceTitle}>{service.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
 
-        {/* 4. Latest News Scroll */}
+        {/* 4. Latest News Scroll (Dynamically Mapped) */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Latest Updates</Text>
           <TouchableOpacity onPress={() => navigation.navigate('News')}>
-            <Text style={styles.seeAllText}>View All</Text>
+                <Text style={styles.seeAllText}>View All</Text>
           </TouchableOpacity>
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
-          {/* News Card 1 */}
-          <View style={styles.newsCard}>
-            <ImageBackground 
-              source={{ uri: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' }} 
-              style={styles.newsImage}
-            >
-              <View style={[styles.tag, {backgroundColor: 'rgba(19, 78, 94, 0.9)'}]}>
-                <Text style={styles.tagText}>Panchayat</Text>
-              </View>
-            </ImageBackground>
-            <View style={styles.newsContent}>
-              <Text style={styles.newsTitle} numberOfLines={2}>New Road Project Approved for Sector 4</Text>
-              <View style={styles.newsMeta}>
-                <Feather name="clock" size={12} color="#94A3B8" />
-                <Text style={styles.newsDate}>2h ago</Text>
-              </View>
-            </View>
-          </View>
+          {RECENT_NEWS.map((item) => (
+            <TouchableOpacity 
+              key={item.id}
+              style={styles.newsCard}
+              activeOpacity={0.9}
+              onPress={() => navigation.navigate('NewsDetails', { article: item })}
 
-          {/* News Card 2 */}
-          <View style={styles.newsCard}>
-            <ImageBackground 
-              source={{ uri: 'https://images.unsplash.com/photo-1625246333195-58197bd47d26?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' }} 
-              style={styles.newsImage}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             >
-               <View style={[styles.tag, {backgroundColor: 'rgba(46, 125, 50, 0.9)'}]}>
-                <Text style={styles.tagText}>Agriculture</Text>
+              <ImageBackground 
+                source={{ uri: item.image }} 
+                style={styles.newsImage}
+                imageStyle={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+              >
+                <View style={styles.overlay} />
+                <View style={[styles.tag, {backgroundColor: getCategoryColor(item.category)}]}>
+                  <Text style={styles.tagText}>{item.category}</Text>
+                </View>
+              </ImageBackground>
+              <View style={styles.newsContent}>
+                <Text style={styles.newsTitle} numberOfLines={2}>{item.title}</Text>
+                <View style={styles.newsMeta}>
+                  <Feather name="clock" size={12} color="#94A3B8" />
+                  <Text style={styles.newsDate}>{item.date}</Text>
+                </View>
               </View>
-            </ImageBackground>
-            <View style={styles.newsContent}>
-              <Text style={styles.newsTitle} numberOfLines={2}>Monsoon Crop Guidelines Released</Text>
-              <View style={styles.newsMeta}>
-                <Feather name="clock" size={12} color="#94A3B8" />
-                <Text style={styles.newsDate}>5h ago</Text>
-              </View>
-            </View>
-          </View>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
-
         {/* 5. Marketplace Scroll */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Fresh from Market</Text>
@@ -191,6 +243,7 @@ export default function Home() {
             { name: 'Organic Mangoes', price: '₹150/kg', image: 'https://images.unsplash.com/photo-1553279768-865429fa0078?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
             { name: 'Clay Pottery', price: '₹250', image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
             { name: 'Pure Honey', price: '₹400', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
+            { name: 'Handwoven Shawls', price: '₹800', image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
           ].map((item, index) => (
             <View key={index} style={styles.productCard}>
               <Image 
@@ -198,13 +251,15 @@ export default function Home() {
                 style={styles.productImage} 
                 resizeMode="cover"
               />
-              <Text style={styles.productTitle}>{item.name}</Text>
-              <Text style={styles.productPrice}>{item.price}</Text>
+              <View style={styles.productInfo}>
+                <Text style={styles.productTitle} numberOfLines={1}>{item.name}</Text>
+                <Text style={styles.productPrice}>{item.price}</Text>
+              </View>
             </View>
           ))}
         </ScrollView>
 
-        {/* 6. Upcoming Events (Preview) */}
+        {/* 6. Upcoming Events */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Upcoming Events</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Event')}>
@@ -220,16 +275,30 @@ export default function Home() {
             </View>
             <View style={styles.eventInfo}>
               <Text style={styles.eventTitle}>Village Health Camp</Text>
-              <Text style={styles.eventLoc}>Community Hall • 10 AM</Text>
+              <Text style={styles.eventLoc}>Community Hall • 10:00 AM</Text>
             </View>
             <TouchableOpacity style={styles.joinBtn}>
+              <Text style={styles.joinBtnText}>Join</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={[styles.eventRow, {marginTop: 12}]}>
+            <View style={[styles.dateBox, {backgroundColor: '#FFF7ED', borderColor: '#FFEDD5'}]}>
+              <Text style={[styles.dateDay, {color: '#EA580C'}]}>20</Text>
+              <Text style={[styles.dateMonth, {color: '#C2410C'}]}>DEC</Text>
+            </View>
+            <View style={styles.eventInfo}>
+              <Text style={styles.eventTitle}>Annual Cultural Fest</Text>
+              <Text style={styles.eventLoc}>Village Square • 6:00 PM</Text>
+            </View>
+            <TouchableOpacity style={[styles.joinBtn, {backgroundColor: '#EA580C'}]}>
               <Text style={styles.joinBtnText}>Join</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Bottom Padding for Tab Bar */}
-        <View style={{height: 100}} />
+        <View style={{height: 120}} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -239,25 +308,25 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#F8FAFC',
-    // Removed paddingTop for Android here to prevent the "gray gap"
+
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingBottom: 15,
-    // Add top padding inside header for Android to cover status bar area seamlessly
-    paddingTop: Platform.OS === 'android' ? 40 : 15,
+    paddingBottom: 20,
+    // Dynamic top padding for seamless Android look
+    paddingTop: Platform.OS === 'android' ? 45 : 15,
     backgroundColor: '#FFFFFF',
-    // Curves at the bottom
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    shadowColor: '#000',
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    // Modern soft shadow
+    shadowColor: '#134E5E',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-    elevation: 5,
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
     zIndex: 10,
     marginBottom: 5,
   },
@@ -270,59 +339,63 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoBox: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+    width: 38,
+    height: 38,
+    borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
   },
   logoText: {
     color: '#FFF',
-    fontWeight: 'bold',
+    fontWeight: '800',
     fontSize: 20,
   },
   appName: {
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#134E5E',
+    letterSpacing: -0.5,
   },
   iconButton: {
-    padding: 4,
+    padding: 6,
     position: 'relative',
+    backgroundColor: '#F1F5F9',
+    borderRadius: 50,
   },
   badge: {
     position: 'absolute',
-    top: 4,
-    right: 4,
+    top: 6,
+    right: 6,
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#C62828',
-    borderWidth: 1,
+    backgroundColor: '#EF4444',
+    borderWidth: 1.5,
     borderColor: '#FFF',
   },
   scrollContent: {
     paddingBottom: 20,
   },
   heroSection: {
+    margin: 20,
     padding: 20,
     backgroundColor: '#FFFFFF',
-    marginBottom: 10,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderRadius: 20,
+    // Modern card shadow
+
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
-    shadowRadius: 10,
-    elevation: 2,
+    shadowRadius: 15,
+    elevation: 3,
   },
   heroTitle: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#134E5E',
+    color: '#0F172A',
     marginBottom: 8,
-    lineHeight: 32,
+    lineHeight: 30,
   },
   heroSubtitle: {
     fontSize: 14,
@@ -333,27 +406,28 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 3,
+    height: 50,
+
+
+
+
   },
   searchInput: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F8FAFC',
     borderTopLeftRadius: 12,
     borderBottomLeftRadius: 12,
     paddingHorizontal: 16,
-    height: 50,
+    height: '100%',
     borderWidth: 1,
     borderColor: '#E2E8F0',
     borderRightWidth: 0,
-    color: '#1E293B',
+    color: '#0F172A',
+    fontSize: 15,
   },
   searchButton: {
     width: 50,
-    height: 50,
+    height: '100%',
     borderTopRightRadius: 12,
     borderBottomRightRadius: 12,
     justifyContent: 'center',
@@ -363,12 +437,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#F1F5F9',
     borderRadius: 12,
-    padding: 15,
-    justifyContent: 'space-around',
+    paddingVertical: 15,
+    paddingHorizontal: 5,
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   statItem: {
     alignItems: 'center',
+    flex: 1,
   },
   statNumber: {
     fontSize: 18,
@@ -378,11 +454,12 @@ const styles = StyleSheet.create({
   statLabel: {
     fontSize: 12,
     color: '#64748B',
-    fontWeight: '500',
+    fontWeight: '600',
+    marginTop: 2,
   },
   statDivider: {
     width: 1,
-    height: 30,
+    height: 25,
     backgroundColor: '#CBD5E1',
   },
   sectionHeader: {
@@ -390,7 +467,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 15,
   },
   sectionTitle: {
@@ -406,55 +483,66 @@ const styles = StyleSheet.create({
   servicesGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     justifyContent: 'space-between',
   },
   serviceCard: {
-    width: '30%',
+    width: (width - 60) / 3, // Precise calculation for 3 columns with spacing
     alignItems: 'center',
     marginBottom: 20,
   },
   serviceIcon: {
-    width: 55,
-    height: 55,
-    borderRadius: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 2,
+    // Subtle inner shadow effect via border
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.03)',
+
+
   },
   serviceTitle: {
     fontSize: 13,
     fontWeight: '600',
     color: '#334155',
+    textAlign: 'center',
   },
   horizontalScroll: {
     paddingHorizontal: 20,
+    paddingBottom: 10, // Avoid clipping shadow
   },
   newsCard: {
     width: 280,
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     marginRight: 16,
-    borderWidth: 1,
-    borderColor: '#F1F5F9',
-    overflow: 'hidden',
+    // Soft shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 3,
   },
   newsImage: {
-    height: 120,
+    height: 140,
     width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    padding: 10,
+    padding: 12,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.1)', // Light overlay for contrast
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
   tag: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
   },
   tagText: {
     color: '#FFF',
@@ -463,13 +551,13 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   newsContent: {
-    padding: 12,
+    padding: 16,
   },
   newsTitle: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '700',
     color: '#1E293B',
-    marginBottom: 6,
+    marginBottom: 8,
     lineHeight: 22,
   },
   newsMeta: {
@@ -480,21 +568,24 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#94A3B8',
     marginLeft: 4,
+    fontWeight: '500',
   },
   productCard: {
-    width: 140,
+    width: 150,
     marginRight: 15,
     backgroundColor: '#FFF',
-    borderRadius: 12,
-    padding: 10,
+    borderRadius: 16,
+
     borderWidth: 1,
     borderColor: '#F1F5F9',
+    overflow: 'hidden',
   },
   productImage: {
     width: '100%',
-    height: 100,
-    borderRadius: 8,
-    marginBottom: 8,
+    height: 110,
+  },
+  productInfo: {
+    padding: 12,
   },
   productTitle: {
     fontSize: 14,
@@ -503,7 +594,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   productPrice: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '700',
     color: '#134E5E',
   },
@@ -515,27 +606,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     padding: 12,
-    borderRadius: 12,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: '#F1F5F9',
+    // Subtle shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 5,
+    elevation: 2,
   },
   dateBox: {
-    backgroundColor: '#E0F2F1',
-    borderRadius: 8,
+    backgroundColor: '#F0FDFA', // Minty background
+    borderRadius: 12,
     paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 14,
+    borderWidth: 1,
+    borderColor: '#CCFBF1',
   },
   dateDay: {
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#134E5E',
   },
   dateMonth: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#004D40',
+    color: '#0F766E',
+    marginTop: -2,
   },
   eventInfo: {
     flex: 1,
@@ -548,17 +648,18 @@ const styles = StyleSheet.create({
   eventLoc: {
     fontSize: 12,
     color: '#64748B',
-    marginTop: 2,
+    marginTop: 4,
+    fontWeight: '500',
   },
   joinBtn: {
     backgroundColor: '#134E5E',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    borderRadius: 24,
   },
   joinBtnText: {
     color: '#FFF',
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });

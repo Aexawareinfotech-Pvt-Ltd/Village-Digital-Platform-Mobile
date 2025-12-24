@@ -4,6 +4,8 @@ import Login from "../screens/Auth/Login";
 import Register from "../screens/Auth/Register";
 import ForgotPassword from "../screens/Auth/ForgotPassword";
 import TabNavigation from "./TabNavigation";
+import NewsList from "../screens/News/NewsList";
+import NewsDetails from "../screens/News/NewsDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +16,8 @@ export default function MainNavigation() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             <Stack.Screen name="MainApp" component={TabNavigation} />
+            <Stack.Screen name="NewsList" component={NewsList} />
+            <Stack.Screen name="NewsDetails" component={NewsDetails} />
         </Stack.Navigator>
     );
 }
