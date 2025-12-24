@@ -35,7 +35,6 @@ export default function Login() {
     }
 };
 
-
   return (
     <View style={styles.mainContainer}>
       {/* Status Bar matches the deep forest color for a seamless look */}
