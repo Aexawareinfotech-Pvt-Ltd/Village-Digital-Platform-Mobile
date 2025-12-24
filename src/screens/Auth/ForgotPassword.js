@@ -3,6 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../../services/firebaseConfig";
+
 
 const { height } = Dimensions.get('window');
 
@@ -10,11 +13,20 @@ export default function ForgotPassword() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
 
-  const handleResetPassword = () => {
-    console.log('Reset password for:', email);
-    alert(`Password reset link sent to ${email}`);
-    navigation.navigate('Login');
-  };
+  const handleResetPassword = async () => {
+    if (!email) {
+      alert("Please enter email");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert("Password reset link sent to your email");
+      navigation.navigate("Login");
+    } catch (error) {
+      alert(error.message);
+    }
+};
 
   return (
     <View style={styles.mainContainer}>
