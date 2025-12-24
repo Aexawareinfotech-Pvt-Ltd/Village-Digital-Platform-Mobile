@@ -77,7 +77,7 @@ const MARKET_ITEMS = [
     price: '₹25,000',
     category: 'Equipment',
     location: 'Sonpur',
-    image: 'https://plus.unsplash.com/premium_photo-1661876569143-6c84c1f93021?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800&auto=format&fit=crop',
     seller: 'Green Energy Sol',
     description: '3HP Solar submersible pump. 5 year warranty included.',
     contact: '9876543210'
@@ -113,6 +113,7 @@ export default function Home() {
       case 'News': navigation.navigate('News'); break;
       case 'Market': navigation.navigate('Market'); break;
       case 'Grievance': navigation.navigate('Grievance'); break; 
+      case 'Events': navigation.navigate('EventList'); break;
       default: console.log(`Clicked on ${serviceName}`);
     }
   };
@@ -302,7 +303,7 @@ export default function Home() {
         {/* 6. Upcoming Events */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Upcoming Events</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+          <TouchableOpacity onPress={() => navigation.navigate('EventList')}>
              <Text style={styles.seeAllText}>Calendar</Text>
           </TouchableOpacity>
         </View>
