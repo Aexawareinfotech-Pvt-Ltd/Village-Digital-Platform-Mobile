@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  StyleSheet, 
-  KeyboardAvoidingView, 
-  Platform,
-  StatusBar,
-  ScrollView,
-  SafeAreaView,
-  Dimensions
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, StatusBar, ScrollView, SafeAreaView, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../services/firebaseConfig";
+
 
 const { height } = Dimensions.get('window');
 
@@ -24,9 +15,32 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+<<<<<<< Updated upstream
   const handleLogin = () => {
     console.log('Login pressed');
   };
+=======
+  const handleLogin = async () => {
+
+    if (!email || !password) {
+      alert("Please enter both email and password");
+      return;
+    }
+    try {
+      console.log("Logging in user...");
+
+      await signInWithEmailAndPassword(auth, email, password);
+
+      alert("Login successful!");
+  
+      navigation.navigate("MainApp");
+
+    } catch (error) {
+      alert("Invalid email or password");
+    }
+};
+
+>>>>>>> Stashed changes
 
   return (
     <View style={styles.mainContainer}>
@@ -47,7 +61,11 @@ export default function Login() {
               {/* Icon color matches the primary deep green */}
               <Feather name="home" size={36} color="#134E5E" />
             </View>
+<<<<<<< Updated upstream
             <Text style={styles.appTitle}>Village App</Text>
+=======
+            <Text style={styles.appTitle}>Village Digital</Text>
+>>>>>>> Stashed changes
             <Text style={styles.tagline}>Connected. Natural. Peaceful.</Text>
           </View>
         </SafeAreaView>
