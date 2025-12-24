@@ -15,11 +15,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-<<<<<<< Updated upstream
-  const handleLogin = () => {
-    console.log('Login pressed');
-  };
-=======
   const handleLogin = async () => {
 
     if (!email || !password) {
@@ -40,7 +35,6 @@ export default function Login() {
     }
 };
 
->>>>>>> Stashed changes
 
   return (
     <View style={styles.mainContainer}>
@@ -61,11 +55,7 @@ export default function Login() {
               {/* Icon color matches the primary deep green */}
               <Feather name="home" size={36} color="#134E5E" />
             </View>
-<<<<<<< Updated upstream
-            <Text style={styles.appTitle}>Village App</Text>
-=======
             <Text style={styles.appTitle}>Village Digital</Text>
->>>>>>> Stashed changes
             <Text style={styles.tagline}>Connected. Natural. Peaceful.</Text>
           </View>
         </SafeAreaView>
