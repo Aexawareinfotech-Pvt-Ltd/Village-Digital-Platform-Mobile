@@ -112,7 +112,7 @@ export default function Home() {
     switch(serviceName) {
       case 'News': navigation.navigate('News'); break;
       case 'Market': navigation.navigate('Market'); break;
-      case 'Events': navigation.navigate('Event'); break; 
+      case 'Grievance': navigation.navigate('Grievance'); break; 
       default: console.log(`Clicked on ${serviceName}`);
     }
   };
@@ -204,7 +204,7 @@ export default function Home() {
             { name: 'News', icon: 'file-text', color: '#134E5E', bg: '#E0F2F1' },
             { name: 'Market', icon: 'shopping-bag', color: '#2E7D32', bg: '#E8F5E9' },
             { name: 'Events', icon: 'calendar', color: '#E65100', bg: '#FFF3E0' },
-            { name: 'Health', icon: 'heart', color: '#C62828', bg: '#FFEBEE' },
+            { name: 'Grievance', icon: 'message-square', color: '#EF4444', bg: '#FEF2F2' },
             { name: 'Jobs', icon: 'briefcase', color: '#1565C0', bg: '#E3F2FD' },
             { name: 'More', icon: 'grid', color: '#455A64', bg: '#ECEFF1' },
           ].map((service, index) => (

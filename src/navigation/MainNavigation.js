@@ -21,6 +21,9 @@ import MyJobs from "../screens/Profile/MyJobs";
 import SavedItems from "../screens/Profile/SavedItems";
 import HelpSupport from "../screens/Profile/HelpSupport";
 import Notifications from "../screens/Home/Notifications";
+import GrievanceList from "../screens/Grievances/GrievancesList";
+import GrievanceDetails from "../screens/Grievances/GrievancesDetails";
+import GrievanceCreate from "../screens/Grievances/GrievancesCreate";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +51,9 @@ export default function MainNavigation() {
             <Stack.Screen name="SavedItems" component={SavedItems} />
             <Stack.Screen name="HelpSupport" component={HelpSupport} />
             <Stack.Screen name="Notifications" component={Notifications} />
+            <Stack.Screen name="GrievanceList" component={GrievanceList} />
+            <Stack.Screen name="GrievanceDetails" component={GrievanceDetails} />
+            <Stack.Screen name="GrievanceCreate" component={GrievanceCreate} />
         </Stack.Navigator>
     );
 }
