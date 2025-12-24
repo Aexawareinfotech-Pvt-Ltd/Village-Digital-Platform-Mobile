@@ -77,7 +77,7 @@ const MARKET_ITEMS = [
     price: '₹25,000',
     category: 'Equipment',
     location: 'Sonpur',
-    image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800&auto=format&fit=crop',
+    image: 'https://plus.unsplash.com/premium_photo-1661876569143-6c84c1f93021?q=80&w=800&auto=format&fit=crop',
     seller: 'Green Energy Sol',
     description: '3HP Solar submersible pump. 5 year warranty included.',
     contact: '9876543210'
@@ -107,7 +107,9 @@ export default function Home() {
   const handlenotifications = () => {
     navigation.navigate('Notifications')
 };
-
+const handleService = () => {
+    navigation.navigate('ServiceDirectory');
+  }
   const handleServicePress = (serviceName) => {
     switch(serviceName) {
       case 'News': navigation.navigate('News'); break;
@@ -153,6 +155,10 @@ export default function Home() {
           </View>
         </View>
         <View style={styles.headerRight}>
+            {/* Service Directory Button - Updated to Book Icon */}
+          <TouchableOpacity onPress={handleService} style={[styles.iconButton, { marginRight: 12 }]}>
+            <Feather name="grid" size={24} color="#134E5E" />
+          </TouchableOpacity>
           <TouchableOpacity onPress={handlenotifications} style={styles.iconButton}>
              <Feather name="bell" size={24} color="#134E5E" />
              <View style={styles.badge} />
@@ -208,7 +214,7 @@ export default function Home() {
             { name: 'Events', icon: 'calendar', color: '#E65100', bg: '#FFF3E0' },
             { name: 'Grievance', icon: 'message-square', color: '#EF4444', bg: '#FEF2F2' },
             { name: 'Jobs', icon: 'briefcase', color: '#1565C0', bg: '#E3F2FD' },
-            { name: 'More', icon: 'grid', color: '#455A64', bg: '#ECEFF1' },
+            { name: 'Farmer Support', icon: 'sun', color: '#15803D', bg: '#F0FDF4' },
           ].map((service, index) => (
             <TouchableOpacity 
               key={index} 
