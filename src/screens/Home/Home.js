@@ -114,6 +114,7 @@ export default function Home() {
       case 'Market': navigation.navigate('Market'); break;
       case 'Grievance': navigation.navigate('Grievance'); break; 
       case 'Events': navigation.navigate('EventList'); break;
+      case 'Jobs': navigation.navigate('JobList'); break;
       default: console.log(`Clicked on ${serviceName}`);
     }
   };
