@@ -104,6 +104,10 @@ export default function Home() {
     navigation.navigate('Profile')
   };
 
+  const handlenotifications = () => {
+    navigation.navigate('Notifications')
+};
+
   const handleServicePress = (serviceName) => {
     switch(serviceName) {
       case 'News': navigation.navigate('News'); break;
@@ -147,7 +151,7 @@ export default function Home() {
           </View>
         </View>
         <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity onPress={handlenotifications} style={styles.iconButton}>
              <Feather name="bell" size={24} color="#134E5E" />
              <View style={styles.badge} />
           </TouchableOpacity>

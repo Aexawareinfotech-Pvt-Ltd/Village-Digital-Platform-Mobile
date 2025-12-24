@@ -14,6 +14,13 @@ import Settings from "../screens/Profile/Settings";
 import Language from "../screens/Profile/Language";
 import PrivacyPolicy from "../screens/Profile/PrivacyPolicy";
 import TermsOfService from "../screens/Profile/TermsOfService";
+import MyListings from "../screens/Profile/MyListings";
+import MyOrders from "../screens/Profile/MyOrders";
+import MyGrievances from "../screens/Profile/MyGrievances";
+import MyJobs from "../screens/Profile/MyJobs";
+import SavedItems from "../screens/Profile/SavedItems";
+import HelpSupport from "../screens/Profile/HelpSupport";
+import Notifications from "../screens/Home/Notifications";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +41,13 @@ export default function MainNavigation() {
             <Stack.Screen name="Language" component={Language} />
             <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
             <Stack.Screen name="TermsOfService" component={TermsOfService} />
+            <Stack.Screen name="MyListings" component={MyListings} />
+            <Stack.Screen name="MyOrders" component={MyOrders} />
+            <Stack.Screen name="MyGrievances" component={MyGrievances} />
+            <Stack.Screen name="MyJobs" component={MyJobs} />
+            <Stack.Screen name="SavedItems" component={SavedItems} />
+            <Stack.Screen name="HelpSupport" component={HelpSupport} />
+            <Stack.Screen name="Notifications" component={Notifications} />
         </Stack.Navigator>
     );
 }
