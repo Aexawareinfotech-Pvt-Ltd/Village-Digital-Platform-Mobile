@@ -26,6 +26,7 @@ export default function Login() {
 
   const handleLogin = () => {
     console.log('Login pressed');
+    navigation.navigate('MainApp');
   };
 
   return (
@@ -47,7 +48,7 @@ export default function Login() {
               {/* Icon color matches the primary deep green */}
               <Feather name="home" size={36} color="#134E5E" />
             </View>
-            <Text style={styles.appTitle}>Village App</Text>
+            <Text style={styles.appTitle}>Village Village</Text>
             <Text style={styles.tagline}>Connected. Natural. Peaceful.</Text>
           </View>
         </SafeAreaView>
