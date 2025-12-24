@@ -29,6 +29,14 @@ import EventDetails from "../screens/Events/EventDetails";
 import JobList from "../screens/jobs/JobList";
 import JobDetails from "../screens/jobs/JobDetails";
 import JobApply from "../screens/jobs/JobApply";
+import ServiceDirectory from "../screens/Services/ServiceDirectory";
+import FarmerSupport from "../screens/FarmerSupport/FarmerSupport";
+import MandiPrices from "../screens/FarmerSupport/MandiPrice";
+import Weather from "../screens/FarmerSupport/Weather";
+import FarmingTips from "../screens/FarmerSupport/FarmingTips";
+import GovtSchemes from "../screens/FarmerSupport/GovtSchemes";
+import SoilTesting from "../screens/FarmerSupport/SoilTesting";
+import Irrigation from "../screens/FarmerSupport/Irrigation";   
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +72,14 @@ export default function MainNavigation() {
             <Stack.Screen name="JobList" component={JobList} />
             <Stack.Screen name="JobDetails" component={JobDetails} />
             <Stack.Screen name="JobApply" component={JobApply} />
+            <Stack.Screen name="ServiceDirectory" component={ServiceDirectory} />
+            <Stack.Screen name="FarmerSupport" component={FarmerSupport} />
+            <Stack.Screen name="MandiPrices" component={MandiPrices} />
+            <Stack.Screen name="Weather" component={Weather} />
+            <Stack.Screen name="FarmingTips" component={FarmingTips} />
+            <Stack.Screen name="GovtSchemes" component={GovtSchemes} />
+            <Stack.Screen name="SoilTesting" component={SoilTesting} />
+            <Stack.Screen name="Irrigation" component={Irrigation} />
         </Stack.Navigator>
     );
 }
