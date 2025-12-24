@@ -1,7 +1,18 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, StatusBar, Image, ScrollView, TouchableOpacity, Platform, Dimensions} from 'react-native';
+import React, { use } from 'react';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  StatusBar, 
+  Image, 
+  ScrollView, 
+  TouchableOpacity, 
+  Platform, 
+  Dimensions 
+} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 
@@ -9,8 +20,8 @@ export default function NewsDetails() {
   const navigation = useNavigation();
   const route = useRoute();
   const { article } = route.params;
+  const insets = useSafeAreaInsets();
 
-  // Helper for tag color (same as NewsList for consistency)
   const getCategoryColor = (cat) => {
     switch(cat) {
       case 'Agriculture': return '#2E7D32';
@@ -32,8 +43,20 @@ export default function NewsDetails() {
         {/* Overlay for back button visibility */}
         <View style={styles.overlay} />
 
-        {/* Header Actions */}
-        <SafeAreaView style={styles.headerActions}>
+        {/* Header Actions - FIXED */}
+        {/* Changed SafeAreaView to standard View and applied dynamic padding */}
+        <View 
+          style={[
+            styles.headerActions, 
+            { 
+              // 3. Dynamic top padding:
+              // - Uses 'insets.top' to clear the Notch (iOS) or Status Bar (Android)
+              // - Adds 10px extra breathing room
+              // - Defaults to 20px on Web (where insets.top is usually 0)
+              paddingTop: (insets.top || 20) + 10 
+            }
+          ]}
+        >
           <TouchableOpacity 
             style={styles.iconBtn} 
             onPress={() => navigation.goBack()}
@@ -43,7 +66,7 @@ export default function NewsDetails() {
           <TouchableOpacity style={styles.iconBtn}>
             <Feather name="share-2" size={24} color="#FFF" />
           </TouchableOpacity>
-        </SafeAreaView>
+        </View>
       </View>
 
       {/* Content Sheet */}
@@ -87,11 +110,10 @@ export default function NewsDetails() {
           <Text style={styles.bodyText}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             {'\n\n'}
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
             {'\n\n'}
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-          </Text>
-
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+            </Text>
         </ScrollView>
       </View>
     </View>
@@ -125,7 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingTop: Platform.OS === 'android' ? 40 : 10,
+    zIndex: 10,
   },
   iconBtn: {
     width: 40,
@@ -134,7 +156,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     justifyContent: 'center',
     alignItems: 'center',
-    backdropFilter: 'blur(10px)', // Works on some versions, optional
+    // Platform specific blur handling if needed
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+      },
+      web: {
+         backdropFilter: 'blur(10px)', 
+      }
+    })
   },
   contentContainer: {
     flex: 1,
