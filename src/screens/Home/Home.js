@@ -107,7 +107,9 @@ export default function Home() {
   const handlenotifications = () => {
     navigation.navigate('Notifications')
 };
-
+const handleService = () => {
+    navigation.navigate('ServiceDirectory');
+  }
   const handleServicePress = (serviceName) => {
     switch(serviceName) {
       case 'News': navigation.navigate('News'); break;
@@ -154,6 +156,10 @@ export default function Home() {
           </View>
         </View>
         <View style={styles.headerRight}>
+            {/* Service Directory Button - Updated to Book Icon */}
+          <TouchableOpacity onPress={handleService} style={[styles.iconButton, { marginRight: 12 }]}>
+            <Feather name="grid" size={24} color="#134E5E" />
+          </TouchableOpacity>
           <TouchableOpacity onPress={handlenotifications} style={styles.iconButton}>
              <Feather name="bell" size={24} color="#134E5E" />
              <View style={styles.badge} />
@@ -207,9 +213,9 @@ export default function Home() {
             { name: 'News', icon: 'file-text', color: '#134E5E', bg: '#E0F2F1' },
             { name: 'Market', icon: 'shopping-bag', color: '#2E7D32', bg: '#E8F5E9' },
             { name: 'Events', icon: 'calendar', color: '#E65100', bg: '#FFF3E0' },
-            { name: 'Health', icon: 'heart', color: '#C62828', bg: '#FFEBEE' },
+            { name: 'Grievance', icon: 'message-square', color: '#EF4444', bg: '#FEF2F2' },
             { name: 'Jobs', icon: 'briefcase', color: '#1565C0', bg: '#E3F2FD' },
-            { name: 'More', icon: 'grid', color: '#455A64', bg: '#ECEFF1' },
+            { name: 'Farmer Support', icon: 'sun', color: '#15803D', bg: '#F0FDF4' },
           ].map((service, index) => (
             <TouchableOpacity 
               key={index} 
@@ -305,7 +311,7 @@ export default function Home() {
         {/* 6. Upcoming Events */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Upcoming Events</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+          <TouchableOpacity onPress={() => navigation.navigate('EventList')}>
              <Text style={styles.seeAllText}>Calendar</Text>
           </TouchableOpacity>
         </View>

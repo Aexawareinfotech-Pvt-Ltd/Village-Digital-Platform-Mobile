@@ -3,6 +3,10 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Keyb
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+//import { db, auth } from '../../services/firebaseConfig';
+import { auth } from '../../services/firebaseConfig';
 
 const { height } = Dimensions.get('window');
 
@@ -20,14 +24,52 @@ export default function Register() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
 
-  const handleRegister = () => {
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+  const handleRegister = async () => {
+    if (!name || !email || !phone || !password || !confirmPassword) {
+      alert("Please fill in all fields!");
       return;
     }
-    // TODO: Implement registration logic
-    console.log('Register pressed', { name, email, phone });
-  };
+
+    if (password !== confirmPassword) {
+     alert("Passwords do not match!");
+     return;
+    }
+
+  try {
+    console.log("Regidtering User...");
+    
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email.trim(),
+      password
+    );
+
+    //console.log("User registered:", userCredential.user.uid);
+
+    const user = userCredential.user;
+
+    // Save extra user data in Firestore
+    // await setDoc(doc(db, "users", user.uid), {
+    //   name: name,
+    //   email: email,
+    //   phone: phone,
+    //   createdAt: serverTimestamp(),
+    // });
+
+    alert("Account created successfully!");
+
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{ name: 'Login' }],
+    // });
+    navigation.navigate("Login");
+
+  } catch (error) {
+    console.error("Error registering user: ", error.message);
+    alert(error.message);
+  }
+};
+
 
   return (
     <View style={styles.mainContainer}>

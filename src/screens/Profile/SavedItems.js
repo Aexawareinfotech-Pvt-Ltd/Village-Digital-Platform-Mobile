@@ -18,8 +18,8 @@ const SAVED_ITEMS = [
     title: 'Solar Water Pump',
     price: '₹25,000',
     location: 'Sonpur',
-    image: 'https://plus.unsplash.com/premium_photo-1679917152960-b9e43b214150?q=80&w=800&auto=format&fit=crop',
-  },
+    image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800&auto=format&fit=crop',
+},
   {
     id: '4',
     title: 'Jersey Cow (Milking)',

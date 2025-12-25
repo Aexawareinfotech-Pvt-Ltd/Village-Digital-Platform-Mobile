@@ -8,7 +8,7 @@ import Home from "../screens/Home/Home";
 // These are placeholders if you haven't created the files yet
 import NewsList from "../screens/News/NewsList"; 
 import MarketplaceList from "../screens/Marketplace/Marketplacelist";
-import EventsList from "../screens/Events/EventsList";
+import GrievanceList from "../screens/Grievances/GrievancesList";
 
 
 const Tab = createBottomTabNavigator();
@@ -54,8 +54,8 @@ export default function TabNavigation() {
             iconName = 'file-text';
           } else if (route.name === 'Market') {
             iconName = 'shopping-bag';
-          } else if (route.name === 'Event') {
-            iconName = 'calendar';
+          } else if (route.name === 'Grievance') {
+            iconName = 'message-square';
           }
 
           // Return the Feather Icon
@@ -66,7 +66,7 @@ export default function TabNavigation() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="News" component={NewsList} />
       <Tab.Screen name="Market" component={MarketplaceList} />
-      <Tab.Screen name="Event" component={EventsList} />
+      <Tab.Screen name="Grievance" component={GrievanceList} />
     </Tab.Navigator>
   );
 }
