@@ -5,9 +5,17 @@ import MainNavigation from './src/navigation/MainNavigation';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <MainNavigation />
-      <StatusBar style="auto" />
-    </NavigationContainer>
+      <NavigationContainer>
+        <MainNavigation />
+        <StatusBar style="auto" />
+      </NavigationContainer>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

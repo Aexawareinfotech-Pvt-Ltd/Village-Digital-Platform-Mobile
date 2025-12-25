@@ -117,6 +117,7 @@ const handleService = () => {
       case 'Grievance': navigation.navigate('Grievance'); break; 
       case 'Events': navigation.navigate('EventList'); break;
       case 'Jobs': navigation.navigate('JobList'); break;
+      case 'Farmer Support': navigation.navigate('FarmerSupport'); break;
       default: console.log(`Clicked on ${serviceName}`);
     }
   };
