@@ -112,7 +112,10 @@ export default function Home() {
     switch(serviceName) {
       case 'News': navigation.navigate('News'); break;
       case 'Market': navigation.navigate('Market'); break;
-      case 'Events': navigation.navigate('Event'); break; 
+      case 'Grievance': navigation.navigate('Grievance'); break; 
+      case 'Events': navigation.navigate('EventList'); break;
+      case 'Jobs': navigation.navigate('JobList'); break;
+      case 'Farmer Support': navigation.navigate('FarmerSupport'); break;
       default: console.log(`Clicked on ${serviceName}`);
     }
   };

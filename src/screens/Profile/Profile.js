@@ -7,7 +7,8 @@ import {
   StatusBar, 
   Image, 
   TouchableOpacity, 
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons'; 
@@ -81,9 +82,17 @@ export default function Profile() {
   // Navigation Handler
   const handleMenuPress = (item) => {
     if (item.isLogout) {
+      if (Platform.OS === "web") {
+      navigation.navigate("Login");
+      console.log("User logged out (WEB)");
+      return;
+    }
+
       Alert.alert('Logout', 'Are you sure you want to logout?', [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Logout', style: 'destructive', onPress: () => console.log('User logged out') }
+        { text: 'Logout', style: 'destructive', onPress: () => {
+          navigation.navigate('Login');
+        }}
       ]);
       return;
     }
@@ -215,10 +224,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
   },
-  backBtn: { 
-    width: 40, 
-    alignItems: 'flex-start' 
-},
   headerTitle: {
     fontSize: 24,
     fontWeight: '800',
