@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons'; 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function TermsOfService() {
+export default function PrivacyPolicy() {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
@@ -23,33 +23,34 @@ export default function TermsOfService() {
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
           <Feather name="arrow-left" size={24} color="#1E293B" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Terms of Service</Text>
+        <Text style={styles.headerTitle}>Privacy Policy</Text>
         <View style={{ width: 40 }} />
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Text style={styles.lastUpdated}>Effective Date: December 10, 2024</Text>
+        <Text style={styles.lastUpdated}>Last Updated: December 10, 2024</Text>
         
-        <Text style={styles.sectionHeader}>1. Acceptance of Terms</Text>
+        <Text style={styles.sectionHeader}>1. Information We Collect</Text>
         <Text style={styles.paragraph}>
-          By accessing and using the Village Digital Platform, you accept and agree to be bound by the terms and provision of this agreement.
+          We collect personal information that you voluntarily provide to us when you register on the Village Digital platform, such as your name, address, contact information, and occupation (e.g., Farmer).
         </Text>
 
-        <Text style={styles.sectionHeader}>2. User Responsibilities</Text>
+        <Text style={styles.sectionHeader}>2. How We Use Your Information</Text>
         <Text style={styles.paragraph}>
-          You agree to use the platform only for lawful purposes. You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.
+          We use personal information collected via our app for a variety of business purposes described below:
+          {'\n'}• To facilitate account creation and logon process.
+          {'\n'}• To send you administrative information.
+          {'\n'}• To fulfill and manage your orders and grievance requests.
         </Text>
 
-        <Text style={styles.sectionHeader}>3. Marketplace Rules</Text>
+        <Text style={styles.sectionHeader}>3. Sharing Your Information</Text>
         <Text style={styles.paragraph}>
-          • Sellers must provide accurate descriptions of agricultural produce.
-          {'\n'}• False or misleading listings may result in account suspension.
-          {'\n'}• Transactions are conducted directly between buyer and seller; the platform is not liable for disputes.
+          We only share information with your consent, to comply with laws, to provide you with services, to protect your rights, or to fulfill business obligations. We may share data with local Gram Panchayat authorities for grievance redressal.
         </Text>
 
-        <Text style={styles.sectionHeader}>4. Grievance Redressal</Text>
+        <Text style={styles.sectionHeader}>4. Location Data</Text>
         <Text style={styles.paragraph}>
-          Frivolous or fake complaints submitted to the Gram Panchayat through this portal may lead to a ban from using the service. Please use this feature responsibly for genuine community issues.
+          We may request access or permission to and track location-based information from your mobile device, either continuously or while you are using our mobile application, to provide certain location-based services like nearby market prices or emergency services.
         </Text>
 
         <View style={{ height: 40 }} />
