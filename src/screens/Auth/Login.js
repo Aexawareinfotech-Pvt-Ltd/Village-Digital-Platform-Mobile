@@ -3,9 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../services/firebaseConfig";
 
+// Import Unified API Service
+import { api } from '../../services/api';
 
 const { height } = Dimensions.get('window');
 
@@ -24,14 +24,16 @@ export default function Login() {
     try {
       console.log("Logging in user...");
 
-      await signInWithEmailAndPassword(auth, email, password);
+      // API Call via api.js
+      await api.signIn(email, password);
 
       alert("Login successful!");
-  
-      navigation.navigate("MainApp");
+
+      navigation.navigate("Home"); // Ensure this matches your App.js route name
 
     } catch (error) {
       alert("Invalid email or password");
+      console.error(error);
     }
 };
 
