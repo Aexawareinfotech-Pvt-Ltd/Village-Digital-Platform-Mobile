@@ -3,9 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
-import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../../services/firebaseConfig";
 
+// Import Unified API Service
+import { api } from '../../services/api';
 
 const { height } = Dimensions.get('window');
 
@@ -20,13 +20,13 @@ export default function ForgotPassword() {
     }
 
     try {
-      await sendPasswordResetEmail(auth, email);
+      await api.resetPassword(email);
       alert("Password reset link sent to your email");
       navigation.navigate("Login");
     } catch (error) {
       alert(error.message);
     }
-};
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingHorizontal: 30,
     paddingTop: 40,
-    paddingBottom: 20, // Added extra padding for scroll comfort
+    paddingBottom: 20, 
     flexGrow: 1,
   },
   infoBox: {
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     alignItems: 'center',
     marginTop: 10,
-    paddingBottom: 20, // Extra bottom padding for safety
+    paddingBottom: 20, 
   },
   backButton: {
     padding: 10,

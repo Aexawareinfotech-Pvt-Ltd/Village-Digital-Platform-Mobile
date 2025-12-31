@@ -3,10 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Keyb
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-//import { db, auth } from '../../services/firebaseConfig';
-import { auth } from '../../services/firebaseConfig';
+
+// Import Unified API Service
+import { api } from "../../services/api";
 
 const { height } = Dimensions.get('window');
 
@@ -35,40 +34,30 @@ export default function Register() {
      return;
     }
 
-  try {
-    console.log("Regidtering User...");
-    
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email.trim(),
-      password
-    );
+    try {
+      console.log("Registering User...");
+      
+      // 1. Create User via API (Firebase Auth)
+      const user = await api.signUp(email.trim(), password);
 
-    //console.log("User registered:", userCredential.user.uid);
+      // 2. Save Profile via API (Backend/MongoDB)
+      await api.createUserProfile({
+        firebaseId: user.uid,
+        fullName: name,
+        email: email,
+        phoneNumber: phone,
+        role: 'Villager',
+        createdAt: new Date().toISOString()
+      });
 
-    const user = userCredential.user;
+      alert("Account created successfully!");
+      navigation.navigate("Login");
 
-    // Save extra user data in Firestore
-    // await setDoc(doc(db, "users", user.uid), {
-    //   name: name,
-    //   email: email,
-    //   phone: phone,
-    //   createdAt: serverTimestamp(),
-    // });
-
-    alert("Account created successfully!");
-
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: 'Login' }],
-    // });
-    navigation.navigate("Login");
-
-  } catch (error) {
-    console.error("Error registering user: ", error.message);
-    alert(error.message);
-  }
-};
+    } catch (error) {
+      console.error("Error registering user: ", error.message);
+      alert(error.message);
+    }
+  };
 
 
   return (
@@ -236,7 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#134E5E',
   },
   gradientHeader: {
-    height: height * 0.35, // Slightly shorter header for Register page to fit more fields
+    height: height * 0.35, 
   },
   safeAreaHeader: {
     flex: 1,
