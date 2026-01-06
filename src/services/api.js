@@ -4,37 +4,34 @@ import {
   signOut, 
   sendPasswordResetEmail 
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, collection, addDoc, getDocs } from 'firebase/firestore';
 
-// Ensure this matches your file name exactly (lowercase 'c')
-import { auth, db, appId } from './firebaseconfig'; 
-
-// ==========================================
-// CONFIGURATION SWITCH
-// ==========================================
-const USE_BACKEND = false; 
-const API_BASE_URL = 'https://magazinish-prorestoration-greta.ngrok-free.dev/api'; 
+// Only import auth for now to isolate the issue
+import { auth } from './firebaseConfig'; 
 
 export const api = {
   
   // ==============================
-  // 1. AUTHENTICATION
+  // 1. AUTHENTICATION SERVICES
   // ==============================
 
   signUp: async (email, password) => {
     try {
+      console.log("API: Attempting to create user...");
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       return userCredential.user;
     } catch (error) {
+      console.error("API Auth Error (SignUp):", error);
       throw error;
     }
   },
 
   signIn: async (email, password) => {
     try {
+      console.log("API: Attempting to sign in...");
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential.user;
     } catch (error) {
+      console.error("API Auth Error (SignIn):", error);
       throw error;
     }
   },
@@ -43,6 +40,7 @@ export const api = {
     try {
       await signOut(auth);
     } catch (error) {
+      console.error("API Auth Error (Logout):", error);
       throw error;
     }
   },
@@ -51,71 +49,25 @@ export const api = {
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
+      console.error("API Auth Error (Reset):", error);
       throw error;
     }
   },
 
   // ==============================
-  // 2. DATA SERVICES
+  // 2. DATA SERVICES (TEMPORARY STUBS)
   // ==============================
+  // These are placeholders so your Register.js/Login.js don't crash.
 
-  // Create User Profile
   createUserProfile: async (userData) => {
-    if (USE_BACKEND) {
-      try {
-        const token = await auth.currentUser?.getIdToken();
-        const response = await fetch(`${API_BASE_URL}/users/register`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` 
-          },
-          body: JSON.stringify(userData),
-        });
-        
-        if (!response.ok) throw new Error('Backend registration failed');
-        return await response.json();
-      } catch (error) {
-        throw error;
-      }
-    } else {
-      // FIRESTORE MODE
-      try {
-        const { firebaseId, ...data } = userData;
-        // Path: artifacts/{appId}/users/{uid}/profile/info
-        await setDoc(doc(db, 'artifacts', appId, 'users', firebaseId, 'profile', 'info'), data);
-        return { success: true };
-      } catch (error) {
-        throw error;
-      }
-    }
+    console.log("⚠️ Auth Only Mode: Skipping database save for:", userData.email);
+    // Returning success true to let the UI proceed
+    return { success: true };
   },
 
-  // Get User Profile (Used for Login Check)
   getUserProfile: async (uid) => {
-    if (USE_BACKEND) {
-      try {
-        const token = await auth.currentUser?.getIdToken();
-        const response = await fetch(`${API_BASE_URL}/users/${uid}`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!response.ok) return null;
-        return await response.json();
-      } catch (error) {
-        return null;
-      }
-    } else {
-      // FIRESTORE MODE
-      try {
-        const docRef = doc(db, 'artifacts', appId, 'users', uid, 'profile', 'info');
-        const docSnap = await getDoc(docRef);
-        return docSnap.exists() ? docSnap.data() : null;
-      } catch (error) {
-        console.error("Profile Fetch Error:", error);
-        return null;
-      }
-    }
+    console.log("⚠️ Auth Only Mode: Skipping database fetch for UID:", uid);
+    // Returning a dummy profile so Login.js allows entry
+    return { name: "Test User", role: "Villager" };
   },
-
-  // ... (Other functions like createGrievance remain same)
 };
