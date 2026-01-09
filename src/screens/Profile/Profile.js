@@ -82,7 +82,6 @@ export default function Profile() {
   // Navigation Handler
   const handleMenuPress = (item) => {
     if (item.isLogout) {
-<<<<<<< Updated upstream
       if (Platform.OS === "web") {
       navigation.navigate("Login");
       console.log("User logged out (WEB)");
@@ -93,19 +92,6 @@ export default function Profile() {
         { text: 'Cancel', style: 'cancel' },
         { text: 'Logout', style: 'destructive', onPress: () => {
           navigation.navigate('Login');
-=======
-      if (Platform.OS === 'web') {
-        navigation.navigate('Login');
-        console.log('Navigate to Login (Web)');
-        return;
-      }
-      
-      Alert.alert('Logout', 'Are you sure you want to logout?', [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Logout', style: 'destructive', onPress: () => {
-          
-          navigation.replace('Login') 
->>>>>>> Stashed changes
         }}
       ]);
       return;
