@@ -7,7 +7,8 @@ import {
   StatusBar, 
   Image, 
   TouchableOpacity, 
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons'; 
@@ -218,10 +219,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
   },
-  backBtn: { 
-    width: 40, 
-    alignItems: 'flex-start' 
-},
   headerTitle: {
     fontSize: 24,
     fontWeight: '800',
