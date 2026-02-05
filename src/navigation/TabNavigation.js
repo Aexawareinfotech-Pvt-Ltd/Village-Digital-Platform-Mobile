@@ -5,7 +5,6 @@ import { Feather } from "@expo/vector-icons"; // Make sure to install: npx expo 
 
 // Import your screens
 import Home from "../screens/Home/Home";
-// These are placeholders if you haven't created the files yet
 import NewsList from "../screens/News/NewsList"; 
 import MarketplaceList from "../screens/Marketplace/Marketplacelist";
 import GrievanceList from "../screens/Grievances/GrievancesList";
@@ -29,8 +28,8 @@ export default function TabNavigation() {
           borderTopWidth: 1,
           borderTopColor: '#F1F5F9',
           // Adjust height based on Platform to prevent clipping
-          height: Platform.OS === 'android' ? 70 : 70, 
-          paddingBottom: Platform.OS === 'android' ? 10 : 30, // Extra padding for iOS Home Indicator
+          height: Platform.OS === 'android' ? 90 : 70, 
+          paddingBottom: Platform.OS === 'ios' ? 10 : 30, // Extra padding for iOS Home Indicator
           paddingTop: 10,
           elevation: 8, // Shadow for Android
           shadowColor: '#134E5E', // Shadow for iOS

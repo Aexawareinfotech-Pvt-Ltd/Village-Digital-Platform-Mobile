@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { Activity, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, StatusBar, ScrollView, SafeAreaView, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
 
-// Import Unified API Service
-import { api } from '../../services/api';
 
 const { height } = Dimensions.get('window');
 
@@ -15,27 +13,12 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async () => {
+    navigation.navigate("MainApp");
 
-    if (!email || !password) {
-      alert("Please enter both email and password");
-      return;
-    }
-    try {
-      console.log("Logging in user...");
-
-      // API Call via api.js
-      await api.signIn(email, password);
-
-      alert("Login successful!");
-
-      navigation.navigate("Home"); // Ensure this matches your App.js route name
-
-    } catch (error) {
-      alert("Invalid email or password");
-      console.error(error);
-    }
-};
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -118,7 +101,7 @@ export default function Login() {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity onPress={handleLogin} activeOpacity={0.8}>
+            <TouchableOpacity onPress={handleLogin} activeOpacity={0.8} disabled={loading}>
               <LinearGradient
                 colors={['#134E5E', '#71B280']} // Matching Button Gradient
                 start={{ x: 0, y: 0 }}

@@ -4,16 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
 
-// Import Unified API Service
-import { api } from "../../services/api";
-
 const { height } = Dimensions.get('window');
 
 export default function Register() {
   const navigation = useNavigation();
   
-  // State for all fields
-  const [name, setName] = useState('');
+   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -25,38 +21,17 @@ export default function Register() {
 
   const handleRegister = async () => {
     if (!name || !email || !phone || !password || !confirmPassword) {
-      alert("Please fill in all fields!");
+      showAlert("Incomplete", "Please fill in all the fields!", "error");
       return;
     }
 
     if (password !== confirmPassword) {
-     alert("Passwords do not match!");
-     return;
+      showAlert("Mismatch", "Passwords do not match!", "error");
+      return;
     }
 
-    try {
-      console.log("Registering User...");
-      
-      // 1. Create User via API (Firebase Auth)
-      const user = await api.signUp(email.trim(), password);
+    navigation.navigate("Login");
 
-      // 2. Save Profile via API (Backend/MongoDB)
-      await api.createUserProfile({
-        firebaseId: user.uid,
-        fullName: name,
-        email: email,
-        phoneNumber: phone,
-        role: 'Villager',
-        createdAt: new Date().toISOString()
-      });
-
-      alert("Account created successfully!");
-      navigation.navigate("Login");
-
-    } catch (error) {
-      console.error("Error registering user: ", error.message);
-      alert(error.message);
-    }
   };
 
 
@@ -197,6 +172,7 @@ export default function Register() {
                   end={{ x: 1, y: 0 }}
                   style={styles.primaryButton}
                 >
+                  
                   <Text style={styles.primaryButtonText}>Sign Up</Text>
                   <Feather name="arrow-right" size={20} color="#FFF" style={{marginLeft: 10}}/>
                 </LinearGradient>
