@@ -4,8 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { Feather } from '@expo/vector-icons'; 
 
-// Import Unified API Service
-import { api } from '../../services/api';
 
 const { height } = Dimensions.get('window');
 
@@ -18,14 +16,7 @@ export default function ForgotPassword() {
       alert("Please enter email");
       return;
     }
-
-    try {
-      await api.resetPassword(email);
-      alert("Password reset link sent to your email");
-      navigation.navigate("Login");
-    } catch (error) {
-      alert(error.message);
-    }
+    
   };
 
   return (

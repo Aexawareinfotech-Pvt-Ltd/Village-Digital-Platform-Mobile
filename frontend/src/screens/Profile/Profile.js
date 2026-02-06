@@ -82,17 +82,12 @@ export default function Profile() {
   // Navigation Handler
   const handleMenuPress = (item) => {
     if (item.isLogout) {
-      if (Platform.OS === "web") {
-      navigation.navigate("Login");
-      console.log("User logged out (WEB)");
-      return;
-    }
-
+      navigation.replace('Login');
       Alert.alert('Logout', 'Are you sure you want to logout?', [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Logout', style: 'destructive', onPress: () => {
-          navigation.navigate('Login');
-        }}
+        { text: 'Logout', style: 'destructive', 
+          onPress: () => navigation.replace('Login') 
+        },
       ]);
       return;
     }
