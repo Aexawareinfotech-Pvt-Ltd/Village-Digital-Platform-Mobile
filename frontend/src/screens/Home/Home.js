@@ -112,9 +112,9 @@ const handleService = () => {
   }
   const handleServicePress = (serviceName) => {
     switch(serviceName) {
-      case 'News': navigation.navigate('NewsList'); break;
-      case 'Market': navigation.navigate('MarketplaceList'); break;
-      case 'Grievance': navigation.navigate('GrievanceList'); break; 
+      case 'News': navigation.navigate('News'); break;
+      case 'Market': navigation.navigate('Market'); break;
+      case 'Grievance': navigation.navigate('Grievance'); break; 
       case 'Events': navigation.navigate('EventList'); break;
       case 'Jobs': navigation.navigate('JobList'); break;
       case 'Farmer Support': navigation.navigate('FarmerSupport');break;
