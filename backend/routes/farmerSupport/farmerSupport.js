@@ -1,0 +1,11 @@
+import express from "express";
+import { getCropAdvisories, getCropAdvisoryById, getMandiPrices, getGovernmentSchemes, getSchemeById, getIrrigationAdvice, getSoilTestingCenters } from "../../controllers/farmerSupport/farmerSupportController.js";
+const router = express.Router();
+router.get("/crop-advisory",        getCropAdvisories);
+router.get("/crop-advisory/:id",    getCropAdvisoryById);
+router.get("/mandi-prices",         getMandiPrices);
+router.get("/schemes",              getGovernmentSchemes);
+router.get("/schemes/:id",          getSchemeById);
+router.get("/irrigation",           getIrrigationAdvice);
+router.get("/soil-centers",         getSoilTestingCenters);
+export default router;
