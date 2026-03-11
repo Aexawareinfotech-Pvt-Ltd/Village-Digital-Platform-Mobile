@@ -1,0 +1,17 @@
+import express from "express";
+import { getProfile, updateProfile, uploadProfilePicture, updateFCMToken, updateNotificationSettings, getMyListings, getSavedItems, getSavedJobs, getSavedEvents, getProfileStats } from "../../controllers/user/profileController.js";
+import authMiddleware from "../../middlewares/authMiddleware.js";
+import { uploadProfile } from "../../middlewares/upload.js";
+const router = express.Router();
+router.use(authMiddleware);
+router.get("/",                   getProfile);
+router.put("/",                   updateProfile);
+router.post("/picture",           uploadProfile.single("profilePicture"), uploadProfilePicture);
+router.put("/fcm-token",          updateFCMToken);
+router.put("/notification-settings", updateNotificationSettings);
+router.get("/stats",              getProfileStats);
+router.get("/my-listings",        getMyListings);
+router.get("/saved-items",        getSavedItems);
+router.get("/saved-jobs",         getSavedJobs);
+router.get("/saved-events",       getSavedEvents);
+export default router;
