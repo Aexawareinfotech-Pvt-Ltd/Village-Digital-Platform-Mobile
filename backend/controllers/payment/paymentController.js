@@ -6,6 +6,7 @@ import { sendSuccess, sendError } from "../../utils/response.js";
 
 export const createOrder = async (req, res) => {
   try {
+    const razorpay = getRazorpay();
     const { amount, itemId } = req.body;
     const item = await Marketplace.findById(itemId);
     if (!item || item.status !== "active") return sendError(res, "Item not available", 404);
