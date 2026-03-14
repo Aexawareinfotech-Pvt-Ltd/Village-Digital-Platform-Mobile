@@ -1,4 +1,4 @@
-import razorpay from "../../config/razorpay.js";
+import getRazorpay from "../../config/razorpay.js";
 import Receipt from "../../models/Marketplace/Receipt.js";
 import Marketplace from "../../models/Marketplace/Marketplace.js";
 import crypto from "crypto";
